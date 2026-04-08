@@ -1,0 +1,18 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.vscode/
+.idea/
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db
+*.log
+.env
+
+# Generated / large data files
+data/processed_transactions.csv
+data/rfm_table.csv
+data/rfm_pca.csv
+data/online_retail_II.csv
