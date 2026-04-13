@@ -1,44 +1,48 @@
 # E-Commerce Customer Behavior & RFM Analytics
 
-This project is part of **DATS 6401 – Visualization of Complex Data** and focuses on analyzing customer purchasing behavior using transactional retail data. It builds a complete analytical pipeline from raw data to advanced visualization using **RFM modeling, statistical analysis, PCA, clustering, and Dash**.
+This project analyzes customer purchasing behavior using transactional retail data. It builds an end-to-end analytical pipeline from raw data to visualization using **RFM modeling, statistical analysis, PCA, clustering, and interactive dashboards**.
 
 ---
 
 ## Author
+
 **Syed Ibrahim Hamza**
 
 ---
 
 ## Dataset
-- **Online Retail II Dataset (UCI / Kaggle CSV version)**
-- ~1 million transactions (2009–2011)
-- UK-based online gift retailer
 
-### Key Characteristics:
-- Missing customer identifiers (~22%)
-- Duplicate transactions
-- Negative values (returns, cancellations)
-- Highly skewed distributions
-- High-cardinality categorical variables
+* **Online Retail II Dataset (UCI / Kaggle)**
+* ~1 million transactions (2009–2011)
+* UK-based online gift retailer
+
+### Key Characteristics
+
+* Missing customer IDs (~22%)
+* Duplicate transactions
+* Negative values (returns/cancellations)
+* Highly skewed distributions
+* High-cardinality categorical features
 
 ---
 
 ## Project Objective
-To transform raw transactional data into meaningful customer insights using:
-- **Recency–Frequency–Monetary (RFM) analysis**
-- **Comprehensive Exploratory Data Analysis (EDA)**
-- **Outlier detection & visualization**
-- **Normality testing**
-- **Data transformation**
-- **Principal Component Analysis (PCA)**
-- **Clustering & segmentation**
-- **Interactive dashboard (Dash)**
+
+Transform raw transactional data into actionable insights through:
+
+* RFM (Recency, Frequency, Monetary) analysis
+* Exploratory Data Analysis (EDA)
+* Statistical analysis & distribution testing
+* Data transformation (log scaling, normalization)
+* Dimensionality reduction (PCA)
+* Customer segmentation & clustering
+* Interactive visualization (Dash)
 
 ---
 
 ## Project Structure
-```
 
+```
 ecommerce-rfm-dashboard/
 │
 ├── data/
@@ -47,15 +51,15 @@ ecommerce-rfm-dashboard/
 │   ├── rfm_table.csv
 │   └── rfm_pca.csv
 │
-├── assets/
-│   └── style.css
-│
 ├── preprocessing/
 │   ├── data_loader.py
 │   └── run_pipeline.py
 │
 ├── phase1_static/
-│   └── numerical_eda/
+│   ├── numerical_eda/
+│   ├── categorical_eda/
+│   ├── 01_eda_numerical.py
+│   └── 02_eda_categorical.py
 │
 ├── analysis/
 │   ├── clustering.py
@@ -65,34 +69,31 @@ ecommerce-rfm-dashboard/
 ├── callbacks/
 │
 ├── app.py
-├── Dockerfile
 ├── requirements.txt
 └── README.md
-
-````
+```
 
 ---
 
 ## Installation
-Install required dependencies:
+
 ```bash
 pip install -r requirements.txt
-````
+```
 
-### Main Libraries:
+### Core Libraries
 
 * pandas, numpy
 * scipy, statsmodels
 * scikit-learn
 * matplotlib, seaborn
-* plotly, dash, dash-bootstrap-components, dash-daq
-* openpyxl, tabulate
+* plotly, dash
 
 ---
 
 ## How to Run
 
-### Step 1 — Add Dataset
+### 1. Add Dataset
 
 Place the dataset in:
 
@@ -102,13 +103,13 @@ data/online_retail_II.csv
 
 ---
 
-### Step 2 — Run Preprocessing Pipeline
+### 2. Run Data Pipeline
 
 ```bash
 python preprocessing/run_pipeline.py
 ```
 
-This generates:
+Generates:
 
 * `preprocessed_transactions.csv`
 * `rfm_table.csv`
@@ -116,36 +117,30 @@ This generates:
 
 ---
 
-### Step 3 — Run Numerical EDA (Layer 2)
+### 3. Run EDA
 
 ```bash
 python phase1_static/01_eda_numerical.py
+python phase1_static/02_eda_categorical.py
 ```
 
-Generates:
+Outputs:
 
-* Histograms, KDE plots
 * Distribution plots
-* Boxplots & boxen plots
-* Violin plots
+* Boxplots & violin plots
 * Scatter & regression plots
-* Joint & pair plots
-* QQ plots (normality testing)
-* Hexbin plots (density)
-* Rug plots
-* Area & line plots
-* 3D visualization
-* Contour density plots
+* Density & correlation visualizations
 
-All outputs are saved in:
+Saved in:
 
 ```
 phase1_static/numerical_eda/
+phase1_static/categorical_eda/
 ```
 
 ---
 
-### Step 4 — Run Dashboard
+### 4. Run Dashboard
 
 ```bash
 python app.py
@@ -153,124 +148,48 @@ python app.py
 
 ---
 
-## Layer 1 — Core Data Pipeline
+## Data Processing Overview
 
-Implemented in:
-
-```
-preprocessing/data_loader.py
-```
-
-### Includes:
-
-* Data loading and type correction
-* Duplicate removal
-* Missing value handling
+* Data cleaning (duplicates, missing values)
 * Feature engineering:
 
   * `LineTotal`
   * `TransactionStatus`
   * `PurchaseQuarter`
   * `PriceCategory`
-* RFM computation
+* RFM computation (completed transactions only)
 * Outlier detection (IQR, Z-score)
-* Data normalization (log, standardization, min-max)
-* PCA (dimensionality reduction)
-* Correlation analysis (Pearson, Spearman, p-values)
-* Descriptive statistics (mean, std, skew, kurtosis)
+* Log transformations for skewed variables
+* PCA for dimensionality reduction
+* Correlation analysis
 
 ---
 
-## Layer 2 — Numerical EDA (COMPLETED)
+## Key Insights
 
-Implemented in:
-
-```
-phase1_static/01_eda_numerical.py
-```
-
-### Includes:
-
-* Univariate analysis:
-
-  * Histograms + KDE
-  * Dist plots
-  * Filled KDE
-  * Boxplots
-  * Violin plots
-  * Rug plots
-  * QQ plots
-
-* Multivariate analysis:
-
-  * Scatter plots
-  * Regression plots
-  * Joint plots
-  * Pair plots
-  * Hexbin plots
-  * Contour plots
-  * 3D plots
-
-### Key Insights:
-
-* Strong **right-skewed distributions** in Frequency and MonetaryValue
-* Significant **outliers** in high-value customers
-* **Negative relationship** between Recency and Frequency
-* **Positive relationship** between Frequency and MonetaryValue
-* Customer behavior aligns with **RFM theory**
+* Strong **right-skewed distributions** in transaction values
+* Presence of **high-value customer outliers**
+* **Frequency positively correlates with MonetaryValue**
+* **Recency inversely relates to engagement**
+* Customer behavior aligns with standard **RFM segmentation patterns**
 
 ---
 
-## Business Logic
+## Data Notes
 
-* Negative `Quantity` and `Price` values are **preserved**
-
-  * Represent returns, cancellations, or adjustments
-* Transactions with invoice starting with `'C'` are marked as **Cancelled**
-* **RFM is computed using only completed transactions**
+* Negative values are preserved to represent **returns/cancellations**
+* Cancelled invoices (`Invoice` starting with `'C'`) are flagged
+* RFM metrics are computed using **valid completed transactions only**
 
 ---
 
-## Pipeline Outputs
+## Outputs
 
-| File                            | Description                   |
-| ------------------------------- | ----------------------------- |
-| `preprocessed_transactions.csv` | Cleaned + engineered dataset  |
-| `rfm_table.csv`                 | Customer-level RFM metrics    |
-| `rfm_pca.csv`                   | PCA-transformed customer data |
-
----
-
-## Data Availability
-
-Large data files are **not included** due to GitHub size limits.
-
-To reproduce:
-
-1. Download dataset
-2. Place in `data/`
-3. Run pipeline
-
----
-
-## Project Roadmap
-
-### Completed
-
-* [x] Layer 0 — Setup
-* [x] Layer 1 — Data pipeline
-* [x] Layer 2 — Numerical EDA
-
-### Upcoming
-
-* [ ] Categorical EDA
-* [ ] Advanced outlier visualization
-* [ ] Data transformation strategies
-* [ ] PCA analysis interpretation
-* [ ] Customer clustering (K-Means, Hierarchical)
-* [ ] Statistical testing
-* [ ] Interactive dashboard (Dash)
-* [ ] Deployment (Docker + GCP)
+| File                          | Description                |
+| ----------------------------- | -------------------------- |
+| preprocessed_transactions.csv | Cleaned transaction data   |
+| rfm_table.csv                 | Customer-level RFM metrics |
+| rfm_pca.csv                   | PCA-transformed features   |
 
 ---
 
@@ -280,29 +199,22 @@ To reproduce:
 git clone <repo-url>
 cd ecommerce-rfm-dashboard
 pip install -r requirements.txt
+
 # Add dataset to /data
 python preprocessing/run_pipeline.py
 python phase1_static/01_eda_numerical.py
+python phase1_static/02_eda_categorical.py
 ```
-
----
-
-## Notes
-
-* Modular, reusable functions
-* Data pipeline is the **single source of truth**
-* All outputs are generated dynamically
-* Structured for scalability and extension
 
 ---
 
 ## Final Goal
 
-A fully deployed interactive dashboard that communicates:
+Develop an interactive dashboard that communicates:
 
 * Customer segmentation
-* Behavioral insights
-* Statistical validation
+* Behavioral trends
+* Statistical insights
 * Business recommendations
 
 ---
@@ -311,5 +223,3 @@ A fully deployed interactive dashboard that communicates:
 
 **Syed Ibrahim Hamza**
 DATS 6401 – Visualization of Complex Data
-👉 or help you write **EDA report section (for submission)**
-```
