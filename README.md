@@ -60,9 +60,11 @@ ecommerce-rfm-dashboard/
 │   ├── numerical_eda/
 │   ├── categorical_eda/
 │   ├── outlier_detection/
+│   ├── normality_tests/
 │   ├── 01_eda_numerical.py
 │   ├── 02_eda_categorical.py
-│   └── 03_outlier_detection.py
+│   ├── 03_outlier_detection.py
+│   └── 04_normality_tests.py
 │
 ├── analysis/
 │   ├── clustering.py
@@ -153,9 +155,9 @@ python phase1_static/03_outlier_detection.py
 Includes:
 
 * IQR, Z-score, and Isolation Forest methods
-* Before/after boxplots
+* Before/after plots
 * Percentage of data removed
-* Comparative analysis of methods
+* Comparative analysis
 
 Saved in:
 
@@ -165,7 +167,30 @@ phase1_static/outlier_detection/
 
 ---
 
-### 5. Run Dashboard
+### 5. Run Normality Testing
+
+```bash
+python phase1_static/04_normality_tests.py
+```
+
+Includes:
+
+* Shapiro-Wilk test
+* Kolmogorov-Smirnov test
+* D’Agostino K² test
+* QQ plots for distribution validation
+* Tabulated statistical results
+* Interpretation of normality assumptions
+
+Saved in:
+
+```
+phase1_static/normality_tests/
+```
+
+---
+
+### 6. Run Dashboard
 
 ```bash
 python app.py
@@ -188,7 +213,12 @@ python app.py
   * IQR (primary method)
   * Z-score (comparison)
   * Isolation Forest (anomaly detection)
-* Log transformations for skewed variables
+* Normality testing using:
+
+  * Shapiro-Wilk
+  * Kolmogorov-Smirnov
+  * D’Agostino K²
+* Data transformation for skewed variables
 * PCA for dimensionality reduction
 * Correlation analysis
 
@@ -196,19 +226,20 @@ python app.py
 
 ## Key Insights
 
-* Strong **right-skewed distributions** in transaction values
-* Presence of **extreme outliers and heavy tails**
+* Strong **right-skewed distributions** across RFM features
+* All key variables (**Recency, Frequency, MonetaryValue**) are **non-normal**
+* Presence of **extreme values and heavy tails**
 * IQR effectively stabilizes distributions for analysis
 * Z-score performs poorly on non-Gaussian data
-* Isolation Forest detects anomalies but does not correct skewness
-* Customer behavior aligns with standard **RFM segmentation patterns**
+* Retail behavior naturally follows **skewed purchasing patterns**
+* Transformation is required before advanced modeling
 
 ---
 
 ## Data Notes
 
-* Negative values are preserved to represent **returns/cancellations**
-* Cancelled invoices (`Invoice` starting with `'C'`) are flagged
+* Negative values represent **returns/cancellations**
+* Cancelled invoices (`Invoice` starting with `'C'`) are preserved and flagged
 * RFM metrics are computed using **valid completed transactions only**
 
 ---
@@ -221,6 +252,7 @@ python app.py
 | rfm_table.csv                 | Customer-level RFM metrics |
 | rfm_pca.csv                   | PCA-transformed features   |
 | cleaned_iqr.csv               | Outlier-treated dataset    |
+| normality_test_results.csv    | Statistical test results   |
 
 ---
 
@@ -236,6 +268,7 @@ python preprocessing/run_pipeline.py
 python phase1_static/01_eda_numerical.py
 python phase1_static/02_eda_categorical.py
 python phase1_static/03_outlier_detection.py
+python phase1_static/04_normality_tests.py
 ```
 
 ---
