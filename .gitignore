@@ -16,3 +16,4 @@ data/processed_transactions.csv
 data/rfm_table.csv
 data/rfm_pca.csv
 data/online_retail_II.csv
+phase1_static/outlier_detection/cleaned_iqr.csv
