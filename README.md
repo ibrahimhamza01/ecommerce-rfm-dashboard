@@ -43,6 +43,7 @@ Transform raw transactional data into actionable insights through:
 ## Project Structure
 
 ```
+
 ecommerce-rfm-dashboard/
 │
 ├── data/
@@ -58,8 +59,10 @@ ecommerce-rfm-dashboard/
 ├── phase1_static/
 │   ├── numerical_eda/
 │   ├── categorical_eda/
+│   ├── outlier_detection/
 │   ├── 01_eda_numerical.py
-│   └── 02_eda_categorical.py
+│   ├── 02_eda_categorical.py
+│   └── 03_outlier_detection.py
 │
 ├── analysis/
 │   ├── clustering.py
@@ -71,7 +74,8 @@ ecommerce-rfm-dashboard/
 ├── app.py
 ├── requirements.txt
 └── README.md
-```
+
+````
 
 ---
 
@@ -79,7 +83,7 @@ ecommerce-rfm-dashboard/
 
 ```bash
 pip install -r requirements.txt
-```
+````
 
 ### Core Libraries
 
@@ -140,7 +144,28 @@ phase1_static/categorical_eda/
 
 ---
 
-### 4. Run Dashboard
+### 4. Run Outlier Detection
+
+```bash
+python phase1_static/03_outlier_detection.py
+```
+
+Includes:
+
+* IQR, Z-score, and Isolation Forest methods
+* Before/after boxplots
+* Percentage of data removed
+* Comparative analysis of methods
+
+Saved in:
+
+```
+phase1_static/outlier_detection/
+```
+
+---
+
+### 5. Run Dashboard
 
 ```bash
 python app.py
@@ -158,7 +183,11 @@ python app.py
   * `PurchaseQuarter`
   * `PriceCategory`
 * RFM computation (completed transactions only)
-* Outlier detection (IQR, Z-score)
+* Outlier detection:
+
+  * IQR (primary method)
+  * Z-score (comparison)
+  * Isolation Forest (anomaly detection)
 * Log transformations for skewed variables
 * PCA for dimensionality reduction
 * Correlation analysis
@@ -168,9 +197,10 @@ python app.py
 ## Key Insights
 
 * Strong **right-skewed distributions** in transaction values
-* Presence of **high-value customer outliers**
-* **Frequency positively correlates with MonetaryValue**
-* **Recency inversely relates to engagement**
+* Presence of **extreme outliers and heavy tails**
+* IQR effectively stabilizes distributions for analysis
+* Z-score performs poorly on non-Gaussian data
+* Isolation Forest detects anomalies but does not correct skewness
 * Customer behavior aligns with standard **RFM segmentation patterns**
 
 ---
@@ -190,6 +220,7 @@ python app.py
 | preprocessed_transactions.csv | Cleaned transaction data   |
 | rfm_table.csv                 | Customer-level RFM metrics |
 | rfm_pca.csv                   | PCA-transformed features   |
+| cleaned_iqr.csv               | Outlier-treated dataset    |
 
 ---
 
@@ -204,6 +235,7 @@ pip install -r requirements.txt
 python preprocessing/run_pipeline.py
 python phase1_static/01_eda_numerical.py
 python phase1_static/02_eda_categorical.py
+python phase1_static/03_outlier_detection.py
 ```
 
 ---
