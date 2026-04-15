@@ -65,12 +65,14 @@ ecommerce-rfm-dashboard/
 │   ├── normality_tests/
 │   ├── transformation_outputs/
 │   ├── pca_analysis/
+│   ├── subplots/
 │   ├── 01_eda_numerical.py
 │   ├── 02_eda_categorical.py
 │   ├── 03_outlier_detection.py
 │   ├── 04_normality_tests.py
 │   ├── 05_transformation.py
-│   └── 06_pca_analysis.py
+│   ├── 06_pca_analysis.py
+│   └── 07_subplots_storytelling.py
 │
 ├── analysis/
 │   ├── clustering.py
@@ -249,7 +251,28 @@ Also generates:
 
 ---
 
-### 8. Run Dashboard
+### 8. Run Subplots (Storytelling)
+
+```bash
+python phase1_static/07_subplots_storytelling.py
+```
+
+Includes:
+
+* Multi-panel subplot figures (≥ 2 figures, each ≥ 4 plots)
+* Customer behavior storytelling (RFM-based)
+* Business-level analysis (revenue, geography, transactions, seasonality)
+* Combined narrative and detailed observations
+
+Saved in:
+
+```
+phase1_static/subplots/
+```
+
+---
+
+### 9. Run Dashboard
 
 ```bash
 python app.py
@@ -346,16 +369,17 @@ python app.py
 
 ## Outputs
 
-| File                            | Description                           |
-| ------------------------------- | ------------------------------------- |
-| preprocessed_transactions.csv   | Cleaned transaction data              |
-| cleaned_iqr.csv                 | Outlier-treated dataset               |
-| rfm_table.csv                   | Customer-level RFM metrics            |
-| rfm_pca.csv                     | PCA-transformed features              |
-| transformation_results.csv      | Transformation comparison results     |
-| best_transformation_summary.csv | Best method per feature               |
-| observations.txt                | Feature-level transformation insights |
-| pca_analysis/*                  | PCA plots and summaries               |
+| File                            | Description                                 |
+| ------------------------------- | ------------------------------------------- |
+| preprocessed_transactions.csv   | Cleaned transaction data                    |
+| cleaned_iqr.csv                 | Outlier-treated dataset                     |
+| rfm_table.csv                   | Customer-level RFM metrics                  |
+| rfm_pca.csv                     | PCA-transformed features                    |
+| transformation_results.csv      | Transformation comparison results           |
+| best_transformation_summary.csv | Best method per feature                     |
+| observations.txt                | Layer-wise analytical observations          |
+| phase1_static/subplots/*        | Storytelling subplot figures and narratives |
+| pca_analysis/*                  | PCA plots and summaries                     |
 
 ---
 
@@ -374,6 +398,7 @@ python phase1_static/03_outlier_detection.py
 python phase1_static/04_normality_tests.py
 python phase1_static/05_transformation.py
 python phase1_static/06_pca_analysis.py
+python phase1_static/07_subplots_storytelling.py
 ```
 
 ---
