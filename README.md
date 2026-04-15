@@ -64,11 +64,13 @@ ecommerce-rfm-dashboard/
 │   ├── outlier_detection/
 │   ├── normality_tests/
 │   ├── transformation_outputs/
+│   ├── pca_analysis/
 │   ├── 01_eda_numerical.py
 │   ├── 02_eda_categorical.py
 │   ├── 03_outlier_detection.py
 │   ├── 04_normality_tests.py
-│   └── 05_transformation.py
+│   ├── 05_transformation.py
+│   └── 06_pca_analysis.py
 │
 ├── analysis/
 │   ├── clustering.py
@@ -124,7 +126,6 @@ Generates:
 * `preprocessed_transactions.csv`
 * `cleaned_iqr.csv`
 * `rfm_table.csv`
-* `rfm_pca.csv`
 
 ---
 
@@ -221,7 +222,34 @@ phase1_static/transformation_outputs/
 
 ---
 
-### 7. Run Dashboard
+### 7. Run PCA Analysis
+
+```bash
+python phase1_static/06_pca_analysis.py
+```
+
+Includes:
+
+* Scree plot
+* Cumulative explained variance
+* PCA scatter plots (2D & 3D)
+* PCA biplot (feature contribution)
+* Singular values analysis
+* Condition number evaluation
+
+Outputs saved in:
+
+```
+phase1_static/pca_analysis/
+```
+
+Also generates:
+
+* `rfm_pca.csv` (PCA-transformed dataset)
+
+---
+
+### 8. Run Dashboard
 
 ```bash
 python app.py
@@ -235,41 +263,61 @@ python app.py
 
   * Missing values
   * Duplicate removal
+
 * Feature engineering:
 
   * `LineTotal`
   * `TransactionStatus`
   * `PurchaseQuarter`
   * `PriceCategory`
+
 * RFM computation (completed transactions only)
 
-### Statistical Analysis
+---
+
+## Statistical Analysis
 
 * Outlier detection:
 
   * IQR (primary)
   * Z-score
   * Isolation Forest
+
 * Normality testing:
 
   * Shapiro-Wilk
   * Kolmogorov-Smirnov
   * D’Agostino K²
 
-### Data Transformation
+---
+
+## Data Transformation
 
 * Applied to strictly positive values only
+
 * Methods:
 
   * Log transformation
   * Box-Cox transformation
   * Standardization
   * MinMax scaling
+
 * Evaluation using:
 
   * Skewness
   * Kurtosis
   * Re-run normality tests (sample-based)
+
+---
+
+## PCA Insights
+
+* First two principal components explain **~92% of total variance**
+* Customer behavior can be effectively represented in **2D space**
+* **Frequency and MonetaryValue are strongly positively correlated**
+* **Recency is inversely related** to customer value and activity
+* PCA confirms clear behavioral structure suitable for clustering
+* Low condition number (~3) indicates **stable and reliable PCA results**
 
 ---
 
@@ -283,7 +331,7 @@ python app.py
 * **Box-Cox consistently produces near-symmetric distributions**
 * Normality tests remain near zero due to large sample size
 * Skewness and kurtosis are more reliable indicators for improvement
-* Standardization is essential for **PCA and clustering**, not normalization
+* Standardization is essential for **PCA and clustering**
 
 ---
 
@@ -307,13 +355,14 @@ python app.py
 | transformation_results.csv      | Transformation comparison results     |
 | best_transformation_summary.csv | Best method per feature               |
 | observations.txt                | Feature-level transformation insights |
+| pca_analysis/*                  | PCA plots and summaries               |
 
 ---
 
 ## Reproducibility
 
 ```bash
-git clone [<repo-url>](https://github.com/ibrahimhamza01/ecommerce-rfm-dashboard)
+git clone https://github.com/ibrahimhamza01/ecommerce-rfm-dashboard
 cd ecommerce-rfm-dashboard
 pip install -r requirements.txt
 
@@ -324,6 +373,7 @@ python phase1_static/02_eda_categorical.py
 python phase1_static/03_outlier_detection.py
 python phase1_static/04_normality_tests.py
 python phase1_static/05_transformation.py
+python phase1_static/06_pca_analysis.py
 ```
 
 ---
