@@ -1,0 +1,55 @@
+Figure 1 — Customer Behavior Story
+----------------------------------
+Figure 1 combines the three core RFM variables with a relationship plot to tell a customer
+behavior story. Recency is right-skewed, suggesting that many customers purchased relatively
+recently while a long tail of customers has been inactive for much longer periods.
+
+Frequency is also highly skewed, showing that most customers purchase only a few times,
+while a smaller group purchases repeatedly. Monetary Value follows the same pattern, where
+most customers contribute modest spending and a limited subset contributes much higher value.
+
+The Recency vs Frequency scatter indicates that customers with lower recency values tend to
+appear more engaged, while many high-recency customers buy less frequently. Overall, the
+figure shows that customer value is unevenly distributed and that a smaller group of loyal
+customers likely drives a disproportionate share of business performance.
+
+================================================================================
+
+Figure 2 — Transaction and Sales Story
+--------------------------------------
+Figure 2 shifts the narrative from customer-level behavior to business-level transaction
+patterns. The monthly revenue trend shows clear variation across time, suggesting seasonality,
+periods of stronger performance, and possible cyclical buying behavior.
+
+The country-level revenue chart reveals strong geographic concentration, with the United Kingdom
+contributing the overwhelming majority of revenue compared with all other countries. This suggests
+that the business is heavily dependent on one core market.
+
+The transaction status plot shows that completed transactions dominate the dataset, while cancelled
+transactions represent a much smaller share. The purchase quarter distribution adds seasonal context
+by showing how transaction counts are spread across Q1, Q2, Q3, and Q4. Together, these panels
+explain when revenue happens, where it comes from, and how transaction activity is distributed
+across the business cycle.
+
+================================================================================
+
+Combined Narrative for Layer 8 — Subplots (Storytelling)
+--------------------------------------------------------
+Figure 1 focuses on customer behavior using the RFM framework. The distributions of
+Recency, Frequency, and Monetary Value show that customers are not homogeneous.
+Most customers purchase infrequently and contribute lower monetary value, while a
+smaller group appears more active and valuable.
+
+Figure 2 expands the story from customer behavior to business performance. Monthly
+revenue shows how sales change over time, the country comparison reveals which
+markets contribute most to revenue, transaction status shows the balance between
+completed and cancelled activity, and purchase quarter reveals seasonal structure.
+
+Together, these subplot figures create a complete business narrative. Customer value is
+unevenly distributed, sales are concentrated in specific markets and time periods, and
+transaction outcomes provide context for interpreting overall revenue patterns. This
+supports the project goal of translating raw retail transactions into clear and interpretable
+business insights.
+
+================================================================================
+
