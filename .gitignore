@@ -19,3 +19,5 @@ data/online_retail_II.csv
 phase1_static/outlier_detection/cleaned_iqr.csv
 phase1_static/normality_tests/normality_summary.csv
 phase1_static/normality_tests/normality_test_results.csv
+phase1_static/transformation_outputs/best_transformation_summary.csv
+phase1_static/transformation_outputs/transformation_results.csv

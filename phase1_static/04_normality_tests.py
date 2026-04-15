@@ -1,21 +1,3 @@
-"""
-04_normality_tests.py
-
-Layer 5 — Normality Testing
-Tests included:
-- Shapiro-Wilk
-- Kolmogorov-Smirnov
-- D'Agostino K²
-
-Includes:
-- QQ plots
-- Tabulated summary table
-- Interpretation
-
-Author: Syed Ibrahim Hamza
-Project: E-Commerce Customer Behavior & RFM Analytics
-"""
-
 from pathlib import Path
 import warnings
 
@@ -27,10 +9,6 @@ from tabulate import tabulate
 
 warnings.filterwarnings("ignore")
 
-
-# =========================
-# Configuration
-# =========================
 DATA_PATHS = [
     Path("data/rfm_table.csv"),
     Path("data/preprocessed_transactions.csv"),
@@ -53,13 +31,7 @@ PREFERRED_COLUMNS = [
 ]
 
 
-# =========================
-# Utility functions
-# =========================
 def load_data():
-    """
-    Load the first available dataset from expected project paths.
-    """
     for path in DATA_PATHS:
         if path.exists():
             print(f"Loaded data from: {path}")
@@ -72,9 +44,6 @@ def load_data():
 
 
 def get_numeric_columns(df: pd.DataFrame):
-    """
-    Return numeric columns, prioritizing common project columns.
-    """
     numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
 
     selected = [col for col in PREFERRED_COLUMNS if col in numeric_cols]
@@ -86,28 +55,18 @@ def get_numeric_columns(df: pd.DataFrame):
 
 
 def clean_series(series: pd.Series):
-    """
-    Drop NaN and infinite values.
-    """
     s = pd.to_numeric(series, errors="coerce")
     s = s.replace([np.inf, -np.inf], np.nan).dropna()
     return s
 
 
 def interpret_p_value(p_value, alpha=ALPHA):
-    """
-    Return normality interpretation from p-value.
-    """
     if pd.isna(p_value):
         return "Test not valid"
     return "Looks Normal" if p_value > alpha else "Not Normal"
 
 
 def sample_for_shapiro(series: pd.Series, max_n=5000, random_state=42):
-    """
-    Shapiro-Wilk is often recommended for <= 5000 observations.
-    If larger, use a random sample for stability.
-    """
     if len(series) > max_n:
         return series.sample(max_n, random_state=random_state)
     return series
@@ -117,9 +76,6 @@ def sample_for_shapiro(series: pd.Series, max_n=5000, random_state=42):
 # Statistical tests
 # =========================
 def run_shapiro(series: pd.Series):
-    """
-    Shapiro-Wilk normality test.
-    """
     try:
         s = sample_for_shapiro(series)
         stat, p = stats.shapiro(s)
@@ -130,10 +86,6 @@ def run_shapiro(series: pd.Series):
 
 
 def run_ks(series: pd.Series):
-    """
-    Kolmogorov-Smirnov test against fitted normal distribution.
-    Data is standardized first.
-    """
     try:
         mean = series.mean()
         std = series.std(ddof=1)
@@ -149,10 +101,6 @@ def run_ks(series: pd.Series):
 
 
 def run_dagostino(series: pd.Series):
-    """
-    D'Agostino and Pearson's K² normality test.
-    Requires at least 8 observations.
-    """
     try:
         if len(series) < 8:
             return np.nan, np.nan, "Requires at least 8 observations"
@@ -166,9 +114,6 @@ def run_dagostino(series: pd.Series):
 # Plotting
 # =========================
 def create_qq_plot(series: pd.Series, column_name: str, output_dir: Path):
-    """
-    Save QQ plot for a single variable.
-    """
     fig, ax = plt.subplots(figsize=(8, 6))
     stats.probplot(series, dist="norm", plot=ax)
     ax.set_title(f"QQ Plot — {column_name}", fontsize=14)
@@ -186,9 +131,6 @@ def create_qq_plot(series: pd.Series, column_name: str, output_dir: Path):
 # Main workflow
 # =========================
 def normality_analysis(df: pd.DataFrame, columns: list[str]):
-    """
-    Run all normality tests for selected columns.
-    """
     results = []
 
     for col in columns:
@@ -265,9 +207,6 @@ def normality_analysis(df: pd.DataFrame, columns: list[str]):
 
 
 def generate_feature_summary(results_df: pd.DataFrame):
-    """
-    Create a feature-level overall interpretation.
-    """
     summaries = []
 
     for feature in results_df["Feature"].unique():
@@ -289,9 +228,6 @@ def generate_feature_summary(results_df: pd.DataFrame):
 
 
 def save_results(results_df: pd.DataFrame, summary_df: pd.DataFrame):
-    """
-    Save outputs to CSV and TXT.
-    """
     csv_path = OUTPUT_DIR / "normality_test_results.csv"
     txt_path = OUTPUT_DIR / "normality_test_results.txt"
     summary_path = OUTPUT_DIR / "normality_summary.csv"

@@ -1,0 +1,6 @@
+Quantity: Transformation analysis used 1,010,540 strictly positive records. Box-Cox performed best overall. Skewness after transformation = 0.1371, kurtosis = -1.1461. Normality tests were re-run after transformation for direct before/after comparison.
+
+Price: Transformation analysis used 1,027,017 strictly positive records. Box-Cox performed best overall. Skewness after transformation = 0.1295, kurtosis = 1.3853. Normality tests were re-run after transformation for direct before/after comparison.
+
+LineTotal: Transformation analysis used 1,007,914 strictly positive records. Box-Cox performed best overall. Skewness after transformation = 0.0266, kurtosis = 0.5703. Normality tests were re-run after transformation for direct before/after comparison.
+
