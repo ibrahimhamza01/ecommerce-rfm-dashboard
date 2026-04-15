@@ -1,0 +1,31 @@
+LAYER 7 — PCA ANALYSIS OBSERVATIONS
+==========================================
+
+1. Scree Plot
+-------------
+The scree plot shows how much variance is captured by each principal component. The scree plot shows a sharp drop after PC1 and a clear elbow at PC2, indicating that the first two components capture the majority of variance, while the third component contributes minimal additional information.
+
+2. Cumulative Explained Variance
+--------------------------------
+The cumulative variance plot shows how much total information is retained as more components are added. This helps justify whether a 2D PCA view is sufficient or whether the third component adds meaningful structure.
+
+3. PCA Scatter Plot (2D)
+------------------------
+The spread along PC1 suggests a dominant behavioral gradient, likely driven by purchasing intensity (frequency and monetary value), while PC2 captures secondary variation.
+
+4. PCA Scatter Plot (3D)
+------------------------
+The third dimension adds limited additional separation, confirming that most structure is captured in 2D.
+
+5. PCA Biplot
+-------------
+The biplot shows that Frequency and MonetaryValue are strongly aligned, indicating that customers who purchase frequently also tend to spend more. Recency points in the opposite direction, suggesting that customers who have not purchased recently tend to have lower frequency and spending. This confirms an inverse relationship between recency and customer value.
+
+6. Singular Values
+------------------
+Singular values measure the strength of variation captured by each principal component. Larger values correspond to more dominant latent structure in the RFM data. This aligns with the explained variance results, reinforcing that PC1 captures the majority of variation.
+
+7. Condition Number Summary
+---------------------------
+The PCA condition number is 2.9815, indicating that the principal components are well-conditioned and the dataset does not suffer from severe multicollinearity. This suggests that PCA results are stable and reliable.
+

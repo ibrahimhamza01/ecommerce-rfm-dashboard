@@ -21,3 +21,6 @@ phase1_static/normality_tests/normality_summary.csv
 phase1_static/normality_tests/normality_test_results.csv
 phase1_static/transformation_outputs/best_transformation_summary.csv
 phase1_static/transformation_outputs/transformation_results.csv
+phase1_static/pca_analysis/condition_number.csv
+phase1_static/pca_analysis/pca_loadings.csv
+phase1_static/pca_analysis/pca_variance_summary.csv
