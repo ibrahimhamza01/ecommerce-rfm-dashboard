@@ -1,6 +1,6 @@
 # E-Commerce Customer Behavior & RFM Analytics
 
-This project analyzes customer purchasing behavior using transactional retail data. It builds a complete end-to-end analytical pipeline from raw data to advanced visualization using **RFM modeling, statistical analysis, data transformation, PCA, clustering, and interactive dashboards**.
+This project analyzes customer purchasing behavior using transactional retail data. It implements a complete end-to-end analytics pipeline from raw data processing to statistical analysis, dimensionality reduction, customer segmentation, and interactive visualization.
 
 ---
 
@@ -12,18 +12,17 @@ This project analyzes customer purchasing behavior using transactional retail da
 
 ## Dataset
 
-* **Online Retail II Dataset (UCI / Kaggle)**
-* ~1 million transactions (2009–2011)
-* UK-based online gift retailer
+- **Online Retail II Dataset (UCI / Kaggle)**
+- ~1 million transactions (2009–2011)
+- UK-based online gift retailer
 
-### Key Characteristics
+### Key Challenges
 
-* Missing customer IDs (~22%)
-* Duplicate transactions
-* Negative values (returns/cancellations)
-* Highly skewed distributions
-* Heavy-tailed numerical features
-* High-cardinality categorical variables
+- Missing customer IDs (~22%)
+- Duplicate records
+- Negative values (returns/cancellations)
+- Highly skewed, heavy-tailed distributions
+- High-cardinality categorical variables
 
 ---
 
@@ -31,20 +30,19 @@ This project analyzes customer purchasing behavior using transactional retail da
 
 Transform raw transactional data into actionable insights through:
 
-* **RFM (Recency, Frequency, Monetary) analysis**
-* Exploratory Data Analysis (EDA)
-* Statistical analysis & **normality testing**
-* **Data transformation (Log, Box-Cox, Scaling)**
-* Dimensionality reduction (**PCA**)
-* Customer segmentation & clustering
-* Interactive visualization using **Dash**
+- **RFM (Recency, Frequency, Monetary) analysis**
+- Exploratory Data Analysis (EDA)
+- Statistical analysis and correlation study
+- Normality testing and transformation
+- Dimensionality reduction (**PCA**)
+- Customer segmentation and clustering
+- Interactive dashboards using **Dash**
 
 ---
 
 ## Project Structure
 
-```
-
+```text
 ecommerce-rfm-dashboard/
 │
 ├── data/
@@ -76,7 +74,8 @@ ecommerce-rfm-dashboard/
 │
 ├── analysis/
 │   ├── clustering.py
-│   └── statistics.py
+│   ├── statistical_analysis.py
+│   └── statistics_outputs/
 │
 ├── layouts/
 ├── callbacks/
@@ -84,7 +83,6 @@ ecommerce-rfm-dashboard/
 ├── app.py
 ├── requirements.txt
 └── README.md
-
 ````
 
 ---
@@ -93,7 +91,7 @@ ecommerce-rfm-dashboard/
 
 ```bash
 pip install -r requirements.txt
-````
+```
 
 ### Core Libraries
 
@@ -111,11 +109,9 @@ pip install -r requirements.txt
 
 Place the dataset in:
 
-```
+```text
 data/online_retail_II.csv
 ```
-
----
 
 ### 2. Run Data Pipeline
 
@@ -123,156 +119,48 @@ data/online_retail_II.csv
 python preprocessing/run_pipeline.py
 ```
 
-Generates:
+This generates:
 
 * `preprocessed_transactions.csv`
 * `cleaned_iqr.csv`
 * `rfm_table.csv`
 
----
-
-### 3. Run EDA
+### 3. Run Static Analysis
 
 ```bash
 python phase1_static/01_eda_numerical.py
 python phase1_static/02_eda_categorical.py
-```
-
-Outputs:
-
-* Distribution plots
-* Boxplots, violin plots
-* Scatter & regression plots
-* Pair plots and density visualizations
-
-Saved in:
-
-```
-phase1_static/numerical_eda/
-phase1_static/categorical_eda/
-```
-
----
-
-### 4. Run Outlier Detection
-
-```bash
 python phase1_static/03_outlier_detection.py
-```
-
-Includes:
-
-* IQR (primary method)
-* Z-score comparison
-* Isolation Forest (anomaly detection)
-* Before/after visualization
-* Percentage of data removed
-
-Saved in:
-
-```
-phase1_static/outlier_detection/
-```
-
----
-
-### 5. Run Normality Testing
-
-```bash
 python phase1_static/04_normality_tests.py
-```
-
-Includes:
-
-* Shapiro-Wilk test
-* Kolmogorov-Smirnov test
-* D’Agostino K² test
-* QQ plots
-* Statistical tables
-* Interpretation of results
-
-Saved in:
-
-```
-phase1_static/normality_tests/
-```
-
----
-
-### 6. Run Data Transformation
-
-```bash
 python phase1_static/05_transformation.py
-```
-
-Includes:
-
-* Log transformation
-* Box-Cox transformation
-* Standardization
-* MinMax scaling
-* Before/after distribution comparison
-* Re-evaluated normality tests
-* Skewness and kurtosis analysis
-* Best transformation selection
-
-Saved in:
-
-```
-phase1_static/transformation_outputs/
-```
-
----
-
-### 7. Run PCA Analysis
-
-```bash
 python phase1_static/06_pca_analysis.py
-```
-
-Includes:
-
-* Scree plot
-* Cumulative explained variance
-* PCA scatter plots (2D & 3D)
-* PCA biplot (feature contribution)
-* Singular values analysis
-* Condition number evaluation
-
-Outputs saved in:
-
-```
-phase1_static/pca_analysis/
-```
-
-Also generates:
-
-* `rfm_pca.csv` (PCA-transformed dataset)
-
----
-
-### 8. Run Subplots (Storytelling)
-
-```bash
 python phase1_static/07_subplots_storytelling.py
 ```
 
-Includes:
+### 4. Run Layer 9 Statistical Analysis
 
-* Multi-panel subplot figures (≥ 2 figures, each ≥ 4 plots)
-* Customer behavior storytelling (RFM-based)
-* Business-level analysis (revenue, geography, transactions, seasonality)
-* Combined narrative and detailed observations
+```bash
+python analysis/statistical_analysis.py
+```
+
+This generates:
+
+* descriptive statistics table
+* Pearson correlation matrix
+* Spearman correlation matrix
+* Pearson correlation heatmap
+* Spearman correlation heatmap
+* scatter matrix
+* multivariate KDE plots
+* `observations.txt`
 
 Saved in:
 
-```
-phase1_static/subplots/
+```text
+analysis/statistics_outputs/
 ```
 
----
-
-### 9. Run Dashboard
+### 5. Run Dashboard
 
 ```bash
 python app.py
@@ -284,8 +172,8 @@ python app.py
 
 * Data cleaning:
 
-  * Missing values
-  * Duplicate removal
+  * missing values handling
+  * duplicate removal
 
 * Feature engineering:
 
@@ -294,92 +182,122 @@ python app.py
   * `PurchaseQuarter`
   * `PriceCategory`
 
-* RFM computation (completed transactions only)
+* RFM metrics computed using **completed transactions only**
 
 ---
 
 ## Statistical Analysis
 
-* Outlier detection:
+### Outlier Detection
 
-  * IQR (primary)
-  * Z-score
-  * Isolation Forest
+* IQR (primary)
+* Z-score
+* Isolation Forest
 
-* Normality testing:
+### Normality Testing
 
-  * Shapiro-Wilk
-  * Kolmogorov-Smirnov
-  * D’Agostino K²
+* Shapiro-Wilk
+* Kolmogorov-Smirnov
+* D’Agostino K²
+
+### Correlation & Statistical Profiling
+
+* Pearson correlation
+* Spearman correlation
+* correlation heatmaps
+* scatter matrix
+* multivariate KDE
+* descriptive statistics table
 
 ---
 
 ## Data Transformation
 
-* Applied to strictly positive values only
+* Log transformation
+* Box-Cox transformation
+* Standardization
+* MinMax scaling
 
-* Methods:
+Evaluation based on:
 
-  * Log transformation
-  * Box-Cox transformation
-  * Standardization
-  * MinMax scaling
-
-* Evaluation using:
-
-  * Skewness
-  * Kurtosis
-  * Re-run normality tests (sample-based)
+* skewness
+* kurtosis
+* normality test comparison
 
 ---
 
 ## PCA Insights
 
-* First two principal components explain **~92% of total variance**
-* Customer behavior can be effectively represented in **2D space**
-* **Frequency and MonetaryValue are strongly positively correlated**
+* First two components explain **~92% of total variance**
+* Customer behavior can be represented effectively in **2D space**
+* **Frequency and MonetaryValue are strongly positively related**
 * **Recency is inversely related** to customer value and activity
-* PCA confirms clear behavioral structure suitable for clustering
-* Low condition number (~3) indicates **stable and reliable PCA results**
+* PCA confirms meaningful behavioral structure suitable for segmentation
+* Low condition number indicates stable PCA results
+
+---
+
+## Layer 9 Highlights
+
+The Layer 9 statistical analysis focuses on customer-level **RFM relationships**.
+
+### Descriptive Statistics
+
+* `Recency` shows a right-skewed distribution with a long tail of inactive customers
+* `Frequency` is strongly right-skewed, indicating that most customers purchase infrequently
+* `MonetaryValue` is also right-skewed, showing that a small number of customers account for disproportionately high spending
+
+### Correlation Findings
+
+* **Frequency and MonetaryValue** show a strong positive relationship
+
+  * Pearson: **0.77**
+  * Spearman: **0.80**
+
+* **Recency and Frequency** show a moderate negative relationship
+
+  * Pearson: **-0.42**
+  * Spearman: **-0.48**
+
+* **Recency and MonetaryValue** show a moderate negative relationship
+
+  * Pearson: **-0.38**
+  * Spearman: **-0.42**
+
+### Interpretation
+
+* Customers who buy more often tend to spend more
+* Recently active customers are generally more valuable
+* Spearman correlations are slightly stronger than Pearson, indicating monotonic but not perfectly linear relationships
 
 ---
 
 ## Key Insights
 
-* Retail transaction data is **highly right-skewed** with heavy tails
-* All key variables (**Quantity, Price, LineTotal**) are **non-normal**
-* Outliers significantly distort statistical analysis
-* IQR effectively stabilizes extreme values
-* Log transformation reduces skewness moderately
-* **Box-Cox consistently produces near-symmetric distributions**
-* Normality tests remain near zero due to large sample size
-* Skewness and kurtosis are more reliable indicators for improvement
-* Standardization is essential for **PCA and clustering**
-
----
-
-## Data Notes
-
-* Negative values represent **returns and cancellations**
-* Cancelled invoices (`Invoice` starting with `'C'`) are preserved and labeled
-* Transformation is applied only to **valid positive transactions**
-* RFM metrics use **completed transactions only**
+* Retail customer behavior is **highly skewed** with heavy tails
+* Most customers are **low-frequency, low-value buyers**
+* A smaller customer segment contributes a large share of revenue
+* **Frequency is the strongest driver of MonetaryValue**
+* **Recency is inversely associated** with both spending and activity
+* Statistical profiling confirms that RFM is effective for customer behavior analysis
+* Transformation improves symmetry, but large real-world retail data remains non-normal
 
 ---
 
 ## Outputs
 
-| File                            | Description                                 |
-| ------------------------------- | ------------------------------------------- |
-| preprocessed_transactions.csv   | Cleaned transaction data                    |
-| cleaned_iqr.csv                 | Outlier-treated dataset                     |
-| rfm_table.csv                   | Customer-level RFM metrics                  |
-| rfm_pca.csv                     | PCA-transformed features                    |
-| transformation_results.csv      | Transformation comparison results           |
-| best_transformation_summary.csv | Best method per feature                     |
-| observations.txt                | Layer-wise analytical observations          |
-| phase1_static/subplots/*        | Storytelling subplot figures and narratives |
-| pca_analysis/*                  | PCA plots and summaries                     |
+| File                                                          | Description                     |
+| ------------------------------------------------------------- | ------------------------------- |
+| `preprocessed_transactions.csv`                               | Cleaned transaction data        |
+| `cleaned_iqr.csv`                                             | Outlier-treated dataset         |
+| `rfm_table.csv`                                               | Customer-level RFM metrics      |
+| `rfm_pca.csv`                                                 | PCA-transformed features        |
+| `transformation_results.csv`                                  | Transformation comparison       |
+| `best_transformation_summary.csv`                             | Best method per feature         |
+| `phase1_static/subplots/*`                                    | Storytelling subplot figures and narratives |
+| `pca_analysis/*`                                              | PCA plots and summaries         |
+| `analysis/statistics_outputs/*`                               | Storytelling Statistical Outputs |
+| `observations.txt`                                            | Layer-wise analytical observations |
 
 ---
 
@@ -399,18 +317,19 @@ python phase1_static/04_normality_tests.py
 python phase1_static/05_transformation.py
 python phase1_static/06_pca_analysis.py
 python phase1_static/07_subplots_storytelling.py
+python analysis/statistical_analysis.py
 ```
 
 ---
 
 ## Final Goal
 
-Develop an interactive dashboard that communicates:
+Build an interactive dashboard that communicates:
 
-* Customer segmentation
-* Behavioral trends
-* Statistical insights
-* Data-driven business recommendations
+* customer segmentation
+* behavioral patterns
+* statistical insights
+* data-driven business recommendations
 
 ---
 
@@ -418,3 +337,5 @@ Develop an interactive dashboard that communicates:
 
 **Syed Ibrahim Hamza**
 DATS 6401 – Visualization of Complex Data
+If you want, I can make this even better by adding a small **Results Preview** section with 3–4 bullets specifically summarizing Layer 9 and PCA together.
+```
