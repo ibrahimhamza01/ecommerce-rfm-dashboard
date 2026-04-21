@@ -1,0 +1,4 @@
+,Recency,Frequency,MonetaryValue
+Recency,1.0,-0.4192,-0.3825
+Frequency,-0.4192,1.0,0.7659
+MonetaryValue,-0.3825,0.7659,1.0

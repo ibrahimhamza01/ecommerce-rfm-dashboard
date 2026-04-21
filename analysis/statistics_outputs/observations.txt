@@ -1,0 +1,38 @@
+Layer 9 — Statistics & Correlation Observations
+============================================================
+
+1. Descriptive Statistics
+------------------------------
+Recency has a mean of 226.57 and a median of 150.50, indicating a right-skewed distribution with many relatively recent customers and a long tail of inactive customers.
+Frequency has a mean of 3.48, a median of 2.00, and a skewness of 1.58, showing that most customers purchase infrequently while a smaller group purchases much more often.
+MonetaryValue has a mean of 994.85, a median of 663.90, and a skewness of 1.30, suggesting that a relatively small number of customers account for disproportionately high spending.
+
+2. Pearson Correlation
+------------------------------
+Frequency and MonetaryValue have a strong positive Pearson correlation of 0.77, indicating that customers who buy more frequently also tend to spend more overall.
+Recency and Frequency have a moderate negative Pearson correlation of -0.42, suggesting that customers who purchased more recently tend to purchase more often.
+Recency and MonetaryValue have a moderate negative Pearson correlation of -0.38, showing that customers with higher inactivity generally contribute lower spending.
+
+3. Spearman Correlation
+------------------------------
+Frequency and MonetaryValue have a strong positive Spearman correlation of 0.80, confirming a strong monotonic relationship between repeat purchasing and total spending.
+Recency and Frequency have a Spearman correlation of -0.48, reinforcing the inverse relationship between inactivity and purchase frequency.
+Recency and MonetaryValue have a Spearman correlation of -0.42, which supports the pattern that recently active customers tend to have greater monetary value.
+The Spearman coefficients are slightly stronger than the Pearson coefficients, suggesting that the relationships are monotonic and not perfectly linear.
+
+4. Scatter Matrix
+------------------------------
+The scatter matrix shows strong clustering in the lower ranges of Frequency and MonetaryValue, which is typical of retail data where most customers are low-to-moderate buyers.
+The vertical banding in Frequency is expected because Frequency is a discrete count variable rather than a continuous measurement.
+The negative spread between Recency and the other variables suggests that more recently active customers are generally more frequent buyers and stronger contributors to revenue.
+
+5. Multivariate KDE
+------------------------------
+The Frequency vs MonetaryValue KDE plot shows the highest density among low-frequency customers, but the density expands upward as Frequency increases, indicating that repeat purchasing is associated with higher spending.
+The Recency vs Frequency KDE plot shows that higher-frequency customers are concentrated at lower Recency values, meaning that active customers tend to purchase more often.
+The Recency vs MonetaryValue KDE plot indicates that higher-value customers are more concentrated among recently active customers, while customers with larger Recency values are mostly lower spenders.
+
+6. Overall Conclusion
+------------------------------
+The statistical analysis consistently shows that customer value is positively associated with purchase frequency and negatively associated with recency.
+These findings support the usefulness of RFM analysis for identifying valuable customer groups and for guiding dashboard storytelling in the final application.
