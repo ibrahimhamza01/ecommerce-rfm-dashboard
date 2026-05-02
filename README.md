@@ -1,12 +1,13 @@
 # E-Commerce Customer Behavior & RFM Analytics
 
-This project analyzes customer purchasing behavior using transactional retail data. It implements a complete end-to-end analytics pipeline from raw data processing to statistical analysis, dimensionality reduction, customer segmentation, and interactive visualization.
+This project analyzes customer purchasing behavior using transactional retail data. It implements a complete end-to-end analytical workflow from raw data processing to statistical modeling, dimensionality reduction, customer segmentation, and interactive visualization.
 
 ---
 
 ## Author
 
-**Syed Ibrahim Hamza**
+**Syed Ibrahim Hamza**  
+DATS 6401 – Visualization of Complex Data
 
 ---
 
@@ -30,19 +31,20 @@ This project analyzes customer purchasing behavior using transactional retail da
 
 Transform raw transactional data into actionable insights through:
 
-- **RFM (Recency, Frequency, Monetary) analysis**
-- Exploratory Data Analysis (EDA)
-- Statistical analysis and correlation study
-- Normality testing and transformation
-- Dimensionality reduction (**PCA**)
-- Customer segmentation and clustering
-- Interactive dashboards using **Dash**
+- RFM (Recency, Frequency, Monetary) analysis  
+- Exploratory Data Analysis (EDA)  
+- Statistical analysis and hypothesis testing  
+- Normality testing and data transformation  
+- Dimensionality reduction (PCA)  
+- Customer segmentation and clustering  
+- Interactive dashboards using Dash  
 
 ---
 
 ## Project Structure
 
-```text
+```
+
 ecommerce-rfm-dashboard/
 │
 ├── data/
@@ -78,11 +80,31 @@ ecommerce-rfm-dashboard/
 │   └── statistics_outputs/
 │
 ├── layouts/
+│   ├── load_data_layout.py
+│   ├── data_cleaning_layout.py
+│   ├── outlier_layout.py
+│   ├── normality_layout.py
+│   ├── transformation_layout.py
+│   ├── pca_layout.py
+│   ├── numerical_layout.py
+│   ├── categorical_layout.py
+│   └── statistics_layout.py
+│
 ├── callbacks/
+│   ├── load_data_callbacks.py
+│   ├── data_cleaning_callbacks.py
+│   ├── outlier_callbacks.py
+│   ├── normality_callbacks.py
+│   ├── transformation_callbacks.py
+│   ├── pca_callbacks.py
+│   ├── numerical_callbacks.py
+│   ├── categorical_callbacks.py
+│   └── statistics_callbacks.py
 │
 ├── app.py
 ├── requirements.txt
 └── README.md
+
 ````
 
 ---
@@ -91,15 +113,17 @@ ecommerce-rfm-dashboard/
 
 ```bash
 pip install -r requirements.txt
-```
+````
 
-### Core Libraries
+---
+
+## Core Libraries
 
 * pandas, numpy
 * scipy, statsmodels
 * scikit-learn
 * matplotlib, seaborn
-* plotly, dash
+* plotly, dash, dash-bootstrap-components, dash-daq
 
 ---
 
@@ -109,9 +133,11 @@ pip install -r requirements.txt
 
 Place the dataset in:
 
-```text
+```
 data/online_retail_II.csv
 ```
+
+---
 
 ### 2. Run Data Pipeline
 
@@ -119,11 +145,14 @@ data/online_retail_II.csv
 python preprocessing/run_pipeline.py
 ```
 
-This generates:
+Generates:
 
 * `preprocessed_transactions.csv`
 * `cleaned_iqr.csv`
 * `rfm_table.csv`
+* `rfm_pca.csv`
+
+---
 
 ### 3. Run Static Analysis
 
@@ -137,28 +166,24 @@ python phase1_static/06_pca_analysis.py
 python phase1_static/07_subplots_storytelling.py
 ```
 
-### 4. Run Layer 9 Statistical Analysis
+---
+
+### 4. Run Statistical Analysis
 
 ```bash
 python analysis/statistical_analysis.py
 ```
 
-This generates:
+Generates:
 
 * descriptive statistics table
-* Pearson correlation matrix
-* Spearman correlation matrix
-* Pearson correlation heatmap
-* Spearman correlation heatmap
-* scatter matrix
+* correlation matrices (Pearson & Spearman)
+* heatmaps and scatter matrix
 * multivariate KDE plots
-* `observations.txt`
+* hypothesis test results
+* observations report
 
-Saved in:
-
-```text
-analysis/statistics_outputs/
-```
+---
 
 ### 5. Run Dashboard
 
@@ -170,23 +195,35 @@ python app.py
 
 ## Data Processing Overview
 
-* Data cleaning:
+### Data Cleaning
 
-  * missing values handling
-  * duplicate removal
-
-* Feature engineering:
-
-  * `LineTotal`
-  * `TransactionStatus`
-  * `PurchaseQuarter`
-  * `PriceCategory`
-
-* RFM metrics computed using **completed transactions only**
+* Missing value handling
+* Duplicate removal
+* Timestamp conversion
+* Business-rule handling for negative values
 
 ---
 
-## Statistical Analysis
+### Feature Engineering
+
+* **LineTotal** = Price × Quantity
+* **TransactionStatus** (Completed / Cancelled)
+* **PurchaseQuarter** (seasonality)
+* **PriceCategory** (binned pricing)
+
+---
+
+### RFM Modeling
+
+Customer-level behavioral features:
+
+* **Recency** → Days since last purchase
+* **Frequency** → Number of purchases
+* **MonetaryValue** → Total spending
+
+---
+
+## Analytical Methods
 
 ### Outlier Detection
 
@@ -194,24 +231,17 @@ python app.py
 * Z-score
 * Isolation Forest
 
+---
+
 ### Normality Testing
 
-* Shapiro-Wilk
-* Kolmogorov-Smirnov
+* Shapiro–Wilk
+* Kolmogorov–Smirnov
 * D’Agostino K²
-
-### Correlation & Statistical Profiling
-
-* Pearson correlation
-* Spearman correlation
-* correlation heatmaps
-* scatter matrix
-* multivariate KDE
-* descriptive statistics table
 
 ---
 
-## Data Transformation
+### Data Transformation
 
 * Log transformation
 * Box-Cox transformation
@@ -222,82 +252,96 @@ Evaluation based on:
 
 * skewness
 * kurtosis
-* normality test comparison
+* statistical test improvement
 
 ---
 
-## PCA Insights
+### Dimensionality Reduction (PCA)
 
-* First two components explain **~92% of total variance**
-* Customer behavior can be represented effectively in **2D space**
-* **Frequency and MonetaryValue are strongly positively related**
-* **Recency is inversely related** to customer value and activity
-* PCA confirms meaningful behavioral structure suitable for segmentation
-* Low condition number indicates stable PCA results
+* Scree plot & explained variance
+* 2D / 3D projections
+* PCA loadings interpretation
+
+#### Key Insights
+
+* Customer behavior can be represented in reduced dimensions
+* Frequency and MonetaryValue are strongly related
+* Recency is inversely related to customer activity
 
 ---
 
-## Layer 9 Highlights
+### Clustering
 
-The Layer 9 statistical analysis focuses on customer-level **RFM relationships**.
+* K-Means applied on RFM features
+* Customer segmentation into behavioral groups
 
-### Descriptive Statistics
+---
 
-* `Recency` shows a right-skewed distribution with a long tail of inactive customers
-* `Frequency` is strongly right-skewed, indicating that most customers purchase infrequently
-* `MonetaryValue` is also right-skewed, showing that a small number of customers account for disproportionately high spending
+### Statistical Analysis
 
-### Correlation Findings
+* Descriptive statistics
+* Pearson & Spearman correlations
+* Correlation heatmaps
+* Scatter matrix
+* Multivariate KDE
 
-* **Frequency and MonetaryValue** show a strong positive relationship
+---
 
-  * Pearson: **0.77**
-  * Spearman: **0.80**
+### Hypothesis Testing
 
-* **Recency and Frequency** show a moderate negative relationship
+* T-test (two groups)
+* ANOVA (multiple groups)
+* Chi-square test (categorical relationships)
 
-  * Pearson: **-0.42**
-  * Spearman: **-0.48**
+---
 
-* **Recency and MonetaryValue** show a moderate negative relationship
+## Dashboard Overview
 
-  * Pearson: **-0.38**
-  * Spearman: **-0.42**
+The interactive dashboard provides a complete analytical workflow:
 
-### Interpretation
+* Load and inspect data
+* Perform data cleaning
+* Detect and analyze outliers
+* Evaluate normality
+* Apply transformations
+* Visualize PCA results
+* Explore numerical patterns
+* Analyze categorical relationships
+* Perform statistical testing
 
-* Customers who buy more often tend to spend more
-* Recently active customers are generally more valuable
-* Spearman correlations are slightly stronger than Pearson, indicating monotonic but not perfectly linear relationships
+### Features
+
+* Fully interactive plots (Plotly)
+* Dynamic transformations
+* PCA visualization with clustering
+* RFM-based insights
+* Statistical testing interface
+* Dash DAQ components (knobs, gauges, switches)
 
 ---
 
 ## Key Insights
 
-* Retail customer behavior is **highly skewed** with heavy tails
-* Most customers are **low-frequency, low-value buyers**
-* A smaller customer segment contributes a large share of revenue
-* **Frequency is the strongest driver of MonetaryValue**
-* **Recency is inversely associated** with both spending and activity
-* Statistical profiling confirms that RFM is effective for customer behavior analysis
-* Transformation improves symmetry, but large real-world retail data remains non-normal
+* Retail data is highly skewed with heavy tails
+* Most customers are low-frequency, low-value buyers
+* A small segment contributes disproportionately to revenue
+* Frequency is the strongest driver of customer value
+* Recency inversely correlates with activity and spending
+* Statistical transformations improve interpretability but real-world data remains non-normal
 
 ---
 
 ## Outputs
 
-| File                                                          | Description                     |
-| ------------------------------------------------------------- | ------------------------------- |
-| `preprocessed_transactions.csv`                               | Cleaned transaction data        |
-| `cleaned_iqr.csv`                                             | Outlier-treated dataset         |
-| `rfm_table.csv`                                               | Customer-level RFM metrics      |
-| `rfm_pca.csv`                                                 | PCA-transformed features        |
-| `transformation_results.csv`                                  | Transformation comparison       |
-| `best_transformation_summary.csv`                             | Best method per feature         |
-| `phase1_static/subplots/*`                                    | Storytelling subplot figures and narratives |
-| `pca_analysis/*`                                              | PCA plots and summaries         |
-| `analysis/statistics_outputs/*`                               | Storytelling Statistical Outputs |
-| `observations.txt`                                            | Layer-wise analytical observations |
+| File                          | Description                |
+| ----------------------------- | -------------------------- |
+| preprocessed_transactions.csv | Cleaned dataset            |
+| cleaned_iqr.csv               | Outlier-treated dataset    |
+| rfm_table.csv                 | Customer-level RFM metrics |
+| rfm_pca.csv                   | PCA-transformed features   |
+| phase1_static/*               | Static analysis plots      |
+| analysis/statistics_outputs/* | Statistical outputs        |
+| observations.txt              | Analytical observations    |
 
 ---
 
@@ -306,6 +350,7 @@ The Layer 9 statistical analysis focuses on customer-level **RFM relationships**
 ```bash
 git clone https://github.com/ibrahimhamza01/ecommerce-rfm-dashboard
 cd ecommerce-rfm-dashboard
+
 pip install -r requirements.txt
 
 # Add dataset to /data
@@ -318,18 +363,19 @@ python phase1_static/05_transformation.py
 python phase1_static/06_pca_analysis.py
 python phase1_static/07_subplots_storytelling.py
 python analysis/statistical_analysis.py
+python app.py
 ```
 
 ---
 
 ## Final Goal
 
-Build an interactive dashboard that communicates:
+Develop an interactive system that communicates:
 
-* customer segmentation
-* behavioral patterns
-* statistical insights
-* data-driven business recommendations
+* Customer segmentation
+* Behavioral patterns
+* Statistical insights
+* Data-driven business recommendations
 
 ---
 
@@ -337,5 +383,4 @@ Build an interactive dashboard that communicates:
 
 **Syed Ibrahim Hamza**
 DATS 6401 – Visualization of Complex Data
-If you want, I can make this even better by adding a small **Results Preview** section with 3–4 bullets specifically summarizing Layer 9 and PCA together.
-```
+
