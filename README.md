@@ -354,5 +354,3 @@ Develop an interactive system that communicates:
 
 Syed Ibrahim Hamza
 DATS 6401 – Visualization of Complex Data
-- Or make a **short 1-page portfolio version of this README**
-```
