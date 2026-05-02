@@ -4,26 +4,35 @@ This project analyzes customer purchasing behavior using transactional retail da
 
 ---
 
+## Live Dashboard (Deployed on GCP)
+
+Access the live application:  
+https://ecommerce-rfm-dashboard-701238022699.us-east1.run.app/
+
+Note: Initial load may take a few seconds due to Cloud Run cold start.
+
+---
+
 ## Author
 
-**Syed Ibrahim Hamza**  
+Syed Ibrahim Hamza  
 DATS 6401 – Visualization of Complex Data
 
 ---
 
 ## Dataset
 
-- **Online Retail II Dataset (UCI / Kaggle)**
-- ~1 million transactions (2009–2011)
-- UK-based online gift retailer
+- Online Retail II Dataset (UCI / Kaggle)  
+- ~1 million transactions (2009–2011)  
+- UK-based online gift retailer  
 
 ### Key Challenges
 
-- Missing customer IDs (~22%)
-- Duplicate records
-- Negative values (returns/cancellations)
-- Highly skewed, heavy-tailed distributions
-- High-cardinality categorical variables
+- Missing customer IDs (~22%)  
+- Duplicate records  
+- Negative values (returns/cancellations)  
+- Highly skewed, heavy-tailed distributions  
+- High-cardinality categorical variables  
 
 ---
 
@@ -80,28 +89,10 @@ ecommerce-rfm-dashboard/
 │   └── statistics_outputs/
 │
 ├── layouts/
-│   ├── load_data_layout.py
-│   ├── data_cleaning_layout.py
-│   ├── outlier_layout.py
-│   ├── normality_layout.py
-│   ├── transformation_layout.py
-│   ├── pca_layout.py
-│   ├── numerical_layout.py
-│   ├── categorical_layout.py
-│   └── statistics_layout.py
-│
 ├── callbacks/
-│   ├── load_data_callbacks.py
-│   ├── data_cleaning_callbacks.py
-│   ├── outlier_callbacks.py
-│   ├── normality_callbacks.py
-│   ├── transformation_callbacks.py
-│   ├── pca_callbacks.py
-│   ├── numerical_callbacks.py
-│   ├── categorical_callbacks.py
-│   └── statistics_callbacks.py
 │
 ├── app.py
+├── Dockerfile
 ├── requirements.txt
 └── README.md
 
@@ -115,9 +106,7 @@ ecommerce-rfm-dashboard/
 pip install -r requirements.txt
 ````
 
----
-
-## Core Libraries
+### Core Libraries
 
 * pandas, numpy
 * scipy, statsmodels
@@ -127,11 +116,11 @@ pip install -r requirements.txt
 
 ---
 
-## How to Run
+## How to Run (Local)
 
 ### 1. Add Dataset
 
-Place the dataset in:
+Place dataset in:
 
 ```
 data/online_retail_II.csv
@@ -147,10 +136,10 @@ python preprocessing/run_pipeline.py
 
 Generates:
 
-* `preprocessed_transactions.csv`
-* `cleaned_iqr.csv`
-* `rfm_table.csv`
-* `rfm_pca.csv`
+* preprocessed_transactions.csv
+* cleaned_iqr.csv
+* rfm_table.csv
+* rfm_pca.csv
 
 ---
 
@@ -176,12 +165,11 @@ python analysis/statistical_analysis.py
 
 Generates:
 
-* descriptive statistics table
-* correlation matrices (Pearson & Spearman)
-* heatmaps and scatter matrix
-* multivariate KDE plots
-* hypothesis test results
-* observations report
+* Descriptive statistics
+* Correlation matrices (Pearson & Spearman)
+* Heatmaps and scatter matrix
+* Multivariate KDE plots
+* Hypothesis testing results
 
 ---
 
@@ -189,6 +177,24 @@ Generates:
 
 ```bash
 python app.py
+```
+
+---
+
+## Deployment (Layer 11)
+
+This project is deployed using:
+
+* Docker
+* Google Cloud Run
+
+### Deployment Command
+
+```bash
+gcloud run deploy ecommerce-rfm-dashboard \
+  --source . \
+  --region us-east1 \
+  --allow-unauthenticated
 ```
 
 ---
@@ -202,24 +208,20 @@ python app.py
 * Timestamp conversion
 * Business-rule handling for negative values
 
----
-
 ### Feature Engineering
 
-* **LineTotal** = Price × Quantity
-* **TransactionStatus** (Completed / Cancelled)
-* **PurchaseQuarter** (seasonality)
-* **PriceCategory** (binned pricing)
+* LineTotal = Price × Quantity
+* TransactionStatus (Completed / Cancelled)
+* PurchaseQuarter (seasonality)
+* PriceCategory (binned pricing)
 
 ---
 
-### RFM Modeling
+## RFM Modeling
 
-Customer-level behavioral features:
-
-* **Recency** → Days since last purchase
-* **Frequency** → Number of purchases
-* **MonetaryValue** → Total spending
+* Recency: Days since last purchase
+* Frequency: Number of purchases
+* MonetaryValue: Total spending
 
 ---
 
@@ -231,15 +233,11 @@ Customer-level behavioral features:
 * Z-score
 * Isolation Forest
 
----
-
 ### Normality Testing
 
 * Shapiro–Wilk
 * Kolmogorov–Smirnov
 * D’Agostino K²
-
----
 
 ### Data Transformation
 
@@ -248,75 +246,59 @@ Customer-level behavioral features:
 * Standardization
 * MinMax scaling
 
-Evaluation based on:
-
-* skewness
-* kurtosis
-* statistical test improvement
-
 ---
 
-### Dimensionality Reduction (PCA)
+## Dimensionality Reduction (PCA)
 
-* Scree plot & explained variance
-* 2D / 3D projections
+* Scree plot and explained variance
+* 2D and 3D projections
 * PCA loadings interpretation
 
-#### Key Insights
-
-* Customer behavior can be represented in reduced dimensions
-* Frequency and MonetaryValue are strongly related
-* Recency is inversely related to customer activity
-
 ---
 
-### Clustering
+## Clustering
 
-* K-Means applied on RFM features
+* K-Means on RFM features
 * Customer segmentation into behavioral groups
 
 ---
 
-### Statistical Analysis
+## Statistical Analysis
 
 * Descriptive statistics
-* Pearson & Spearman correlations
+* Pearson and Spearman correlations
 * Correlation heatmaps
 * Scatter matrix
 * Multivariate KDE
 
----
-
 ### Hypothesis Testing
 
-* T-test (two groups)
-* ANOVA (multiple groups)
-* Chi-square test (categorical relationships)
+* T-test
+* ANOVA
+* Chi-square test
 
 ---
 
 ## Dashboard Overview
 
-The interactive dashboard provides a complete analytical workflow:
+The interactive dashboard provides:
 
-* Load and inspect data
-* Perform data cleaning
-* Detect and analyze outliers
-* Evaluate normality
-* Apply transformations
-* Visualize PCA results
-* Explore numerical patterns
-* Analyze categorical relationships
-* Perform statistical testing
+* Data loading and inspection
+* Data cleaning
+* Outlier detection
+* Normality testing
+* Data transformation
+* PCA visualization
+* Numerical and categorical analysis
+* Statistical testing
 
 ### Features
 
-* Fully interactive plots (Plotly)
+* Interactive Plotly visualizations
 * Dynamic transformations
-* PCA visualization with clustering
-* RFM-based insights
-* Statistical testing interface
-* Dash DAQ components (knobs, gauges, switches)
+* PCA clustering
+* Dash DAQ components
+* Callback-driven updates
 
 ---
 
@@ -327,7 +309,7 @@ The interactive dashboard provides a complete analytical workflow:
 * A small segment contributes disproportionately to revenue
 * Frequency is the strongest driver of customer value
 * Recency inversely correlates with activity and spending
-* Statistical transformations improve interpretability but real-world data remains non-normal
+* Real-world data remains non-normal despite transformation
 
 ---
 
@@ -339,9 +321,6 @@ The interactive dashboard provides a complete analytical workflow:
 | cleaned_iqr.csv               | Outlier-treated dataset    |
 | rfm_table.csv                 | Customer-level RFM metrics |
 | rfm_pca.csv                   | PCA-transformed features   |
-| phase1_static/*               | Static analysis plots      |
-| analysis/statistics_outputs/* | Statistical outputs        |
-| observations.txt              | Analytical observations    |
 
 ---
 
@@ -355,14 +334,6 @@ pip install -r requirements.txt
 
 # Add dataset to /data
 python preprocessing/run_pipeline.py
-python phase1_static/01_eda_numerical.py
-python phase1_static/02_eda_categorical.py
-python phase1_static/03_outlier_detection.py
-python phase1_static/04_normality_tests.py
-python phase1_static/05_transformation.py
-python phase1_static/06_pca_analysis.py
-python phase1_static/07_subplots_storytelling.py
-python analysis/statistical_analysis.py
 python app.py
 ```
 
@@ -381,6 +352,7 @@ Develop an interactive system that communicates:
 
 ## Contact
 
-**Syed Ibrahim Hamza**
+Syed Ibrahim Hamza
 DATS 6401 – Visualization of Complex Data
-
+- Or make a **short 1-page portfolio version of this README**
+```
