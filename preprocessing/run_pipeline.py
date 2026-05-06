@@ -1,4 +1,4 @@
-from preprocessing.data_loader import run_full_pipeline
+from data_loader import run_full_pipeline
 
 results = run_full_pipeline("data/online_retail_II.csv")
 

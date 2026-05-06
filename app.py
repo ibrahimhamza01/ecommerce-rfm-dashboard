@@ -45,7 +45,7 @@ app.layout = dbc.Container(
         dcc.Store(id="metadata-store"),
         dcc.Store(id="history-store", data=[]),
 
-        # ✅ CLEAN HEADER
+        # CLEAN HEADER
         html.Div(
             [
                 html.H2(
